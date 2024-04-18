@@ -1,11 +1,13 @@
-package fams.com.br;
+package fams.com.br.controller;
 
 import fams.com.br.model.DadosFams;
 import fams.com.br.model.record.DadosFamsCadastro;
 import fams.com.br.repository.DadosFamsRepository;
+import fams.com.br.service.FamsService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,16 +15,20 @@ import org.springframework.web.bind.annotation.*;
 public class FamsController {
 
     @Autowired
-    private DadosFamsRepository repository;
+    DadosFamsRepository repository;
+    @Autowired
+    FamsService service;
 
     @PostMapping
     @Transactional
-    public void cadastrarFams(@RequestBody @Valid DadosFamsCadastro famsCadastro){
-        repository.save(new DadosFams(famsCadastro));
+    public DadosFams cadastrarFams(@RequestBody @Valid DadosFams famsCadastro){
+        return service.cadastrarFams(famsCadastro);
     }
 
     @DeleteMapping
-    public void delete(DadosFams id){
-        repository.delete(id);
+    @Transactional
+    public ResponseEntity delete(Long id){
+        service.deletar(id);
+        return ResponseEntity.ok().build();
     }
 }

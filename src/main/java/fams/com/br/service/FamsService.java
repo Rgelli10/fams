@@ -14,6 +14,18 @@ public class FamsService {
     public DadosFams cadastrarFams(DadosFams dadosFams){
         return repository.save(dadosFams);
     }
+
+    public DadosFams atualizarFams(Long id){
+        DadosFams dadosFams = new DadosFams();
+        DadosFams fams = repository.findById(id).orElseThrow(RuntimeException::new);
+        fams.setNome(dadosFams.getNome());
+        dadosFams.setDescricao(dadosFams.getDescricao());
+        dadosFams.setGenero(dadosFams.getGenero());
+        dadosFams.setTemporadas(dadosFams.getTemporadas());
+        dadosFams.setClassificacao(dadosFams.getClassificacao());
+        return dadosFams;
+    }
+
     public void deletar(Long id){
         repository.deleteById(id);
     }

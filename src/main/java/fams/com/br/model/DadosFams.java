@@ -19,10 +19,10 @@ public class DadosFams {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String genero;
+    private String[] genero;
     private String descricao;
-    private String temporadas;
-    private String classificacao;
+    private List<Integer> temporadas;
+    private Integer classificacao;
 
     public DadosFams(DadosFamsCadastro cadastro){
         this.id = cadastro.id();

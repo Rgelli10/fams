@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FamsService {
-    @Autowired
     DadosFamsRepository repository;
+
+    public FamsService(DadosFamsRepository repository) {
+        this.repository = repository;
+    }
 
     public DadosFams cadastrarFams(DadosFams dadosFams){
         return repository.save(dadosFams);
@@ -18,10 +21,11 @@ public class FamsService {
         DadosFams dadosFams = new DadosFams();
         DadosFams fams = repository.findById(id).orElseThrow(RuntimeException::new);
         fams.setNome(dadosFams.getNome());
-        dadosFams.setDescricao(dadosFams.getDescricao());
-        dadosFams.setGenero(dadosFams.getGenero());
-        dadosFams.setTemporadas(dadosFams.getTemporadas());
-        dadosFams.setClassificacao(dadosFams.getClassificacao());
+        fams.setDescricaoGeral(dadosFams.getDescricaoGeral());
+        fams.setGenero(dadosFams.getGenero());
+        fams.setTemporadas(dadosFams.getTemporadas());
+        fams.setClassificacaoGeral(dadosFams.getClassificacaoGeral());
+
         return dadosFams;
     }
 

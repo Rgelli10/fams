@@ -14,32 +14,33 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString
 public class DadosFams {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String[] genero;
-    private String descricao;
-    private List<Integer> temporadas;
-    private Integer classificacao;
+    private String descricaoGeral;
+    private List<Temporada> temporadas;
+    private Integer classificacaoGeral;
 
     public DadosFams(DadosFamsCadastro cadastro){
         this.id = cadastro.id();
         this.nome = cadastro.nome();
         this.genero = cadastro.genero();
-        this.descricao = cadastro.descricao();
+        this.descricaoGeral = cadastro.descricao();
         this.temporadas = cadastro.temporadas();
-        this.classificacao = cadastro.classificacao();
+        this.classificacaoGeral = cadastro.classificacao();
     }
 
     public void atualizaFams(DadosFamsCadastro cadastro){
         this.id = cadastro.id();
         this.nome = cadastro.nome();
         this.genero = cadastro.genero();
-        this.descricao = cadastro.descricao();
+        this.descricaoGeral = cadastro.descricao();
         this.temporadas = cadastro.temporadas();
-        this.classificacao = cadastro.classificacao();
+        this.classificacaoGeral = cadastro.classificacao();
     }
 
 }

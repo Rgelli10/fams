@@ -1,8 +1,7 @@
 package fams.com.br.service;
 
-import fams.com.br.model.DadosFams;
+import fams.com.br.model.entidade.DadosFams;
 import fams.com.br.repository.DadosFamsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,6 @@
 package fams.com.br.repository;
 
-import fams.com.br.model.DadosFams;
+import fams.com.br.model.entidade.DadosFams;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

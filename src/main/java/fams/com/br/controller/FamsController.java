@@ -1,6 +1,6 @@
 package fams.com.br.controller;
 
-import fams.com.br.model.DadosFams;
+import fams.com.br.model.entidade.DadosFams;
 import fams.com.br.service.FamsService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.transaction.Transactional;

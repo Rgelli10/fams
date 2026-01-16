@@ -1,33 +1,41 @@
-HELP.md
+# ===============================
+# Java / Spring Boot
+# ===============================
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# ===============================
+# Maven / Gradle
+# ===============================
+.mvn/
+.gradle/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+# ===============================
+# Logs
+# ===============================
+logs/
+*.log
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+# ===============================
+# Arquivos de ambiente
+# ===============================
+.env
+.env.*
+application-local.yml
+application-local.properties
 
-### VS Code ###
+# ===============================
+# IDEs
+# ===============================
+.idea/
 .vscode/
+*.iml
+
+# ===============================
+# SO
+# ===============================
+.DS_Store
+Thumbs.db

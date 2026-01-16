@@ -1,54 +1,44 @@
 package fams.com.br.service;
 
-import fams.com.br.model.dto.UsuarioFamsDTO;
-import fams.com.br.model.entidade.UsuarioFams;
-import fams.com.br.repository.UsuarioFamsRepository;
-import fams.com.br.service.mapper.UsuarioMapper;
+import fams.com.br.model.entidade.Usuario;
+import fams.com.br.model.record.UsuarioCadastroDTO;
+import fams.com.br.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    private final UsuarioFamsRepository repository;
-    private final UsuarioMapper mapper;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioFamsRepository repository, UsuarioMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+    public Usuario autenticar(String email, String senha) {
 
-    public UsuarioFamsDTO cadastrarUsuario(UsuarioFamsDTO dto) {
-        UsuarioFams usuario = mapper.toEntity(dto);
-        UsuarioFams salvo = repository.save(usuario);
-        return mapper.toDTO(Optional.of(salvo));
-    }
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário ou senha inválidos"));
 
-    public UsuarioFamsDTO atualizar(Long id, UsuarioFamsDTO usuarioAtualizado) {
-        UsuarioFams usuarioExistente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-
-        usuarioExistente.setNome(usuarioAtualizado.getNome());
-        usuarioExistente.setEmail(usuarioAtualizado.getEmail());
-        usuarioExistente.setSenha(usuarioAtualizado.getSenha());
-
-        UsuarioFams salvo = repository.save(usuarioExistente);
-        return mapper.toDTO(Optional.of(salvo));
-    }
-
-    public void deletar(Long id) {
-        repository.deleteById(id);
-    }
-
-    public UsuarioFamsDTO login(String email, String senha) {
-
-        Optional<UsuarioFams> usuario = repository.findByEmailAndSenha(email, senha);
-        if (usuario != null) {
-            return mapper.toDTO(usuario);
-        } else {
-            return null;
+        if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+            throw new RuntimeException("Usuário ou senha inválidos");
         }
+
+        return usuario;
+    }
+
+    public Usuario cadastrar(UsuarioCadastroDTO dto) {
+
+        if (usuarioRepository.findByEmail(dto.email()).isPresent()) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+
+        Usuario usuario = new Usuario();
+        usuario.setNome(dto.nome());
+        usuario.setEmail(dto.email());
+        usuario.setSenha(passwordEncoder.encode(dto.senha()));
+
+        return usuarioRepository.save(usuario);
     }
 
 }
+
